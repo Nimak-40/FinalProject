@@ -170,7 +170,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
                     b.HasIndex("SpecialistId");
 
-                    b.ToTable("OrderRequest");
+                    b.ToTable("OrderRequests");
                 });
 
             modelBuilder.Entity("Achare.src.Domain.Core.Entities.Payment", b =>
@@ -255,8 +255,8 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -274,7 +274,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 1,
-                            BasePrice = 0m,
+                            BasePrice = 500000m,
                             Description = "نظافت کامل منزل توسط نیروی متخصص",
                             EstimatedDurationInMinutes = 0,
                             Name = "نظافت منزل",
@@ -284,7 +284,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 2,
-                            BasePrice = 0m,
+                            BasePrice = 300000m,
                             Description = "شستشوی انواع فرش و موکت",
                             EstimatedDurationInMinutes = 0,
                             Name = "شستشوی فرش",
@@ -294,7 +294,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 3,
-                            BasePrice = 0m,
+                            BasePrice = 700000m,
                             Description = "تعمیر یخچال، ماشین لباسشویی و ...",
                             EstimatedDurationInMinutes = 0,
                             Name = "تعمیر لوازم خانگی",
@@ -304,7 +304,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 4,
-                            BasePrice = 0m,
+                            BasePrice = 1200000m,
                             Description = "نقاشی داخلی و خارجی ساختمان",
                             EstimatedDurationInMinutes = 0,
                             Name = "نقاشی ساختمان",
@@ -314,7 +314,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 5,
-                            BasePrice = 0m,
+                            BasePrice = 150000m,
                             Description = "خدمات اصلاح و آرایش مو",
                             EstimatedDurationInMinutes = 0,
                             Name = "اصلاح مو",
@@ -324,7 +324,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 6,
-                            BasePrice = 0m,
+                            BasePrice = 800000m,
                             Description = "میکاپ تخصصی عروس و مجالس",
                             EstimatedDurationInMinutes = 0,
                             Name = "میکاپ",
@@ -334,7 +334,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 7,
-                            BasePrice = 0m,
+                            BasePrice = 400000m,
                             Description = "آموزش زبان انگلیسی با بهترین اساتید",
                             EstimatedDurationInMinutes = 0,
                             Name = "کلاس زبان انگلیسی",
@@ -344,7 +344,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 8,
-                            BasePrice = 0m,
+                            BasePrice = 500000m,
                             Description = "آموزش انواع سازها",
                             EstimatedDurationInMinutes = 0,
                             Name = "کلاس موسیقی",
@@ -354,7 +354,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 9,
-                            BasePrice = 0m,
+                            BasePrice = 2000000m,
                             Description = "خدمات حمل و نقل اثاثیه",
                             EstimatedDurationInMinutes = 0,
                             Name = "باربری و اثاث‌کشی",
@@ -364,7 +364,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         new
                         {
                             Id = 10,
-                            BasePrice = 0m,
+                            BasePrice = 1000000m,
                             Description = "جابجایی مسافران با خودروهای لوکس",
                             EstimatedDurationInMinutes = 0,
                             Name = "حمل‌ونقل مسافران",
@@ -431,6 +431,9 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal?>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
@@ -545,7 +548,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 1,
                             Email = "cust1@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6813),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9032),
                             Username = "customer1",
                             PreferredAddress = "Tehran, St. 1"
                         },
@@ -554,7 +557,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 2,
                             Email = "cust2@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6817),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9037),
                             Username = "customer2",
                             PreferredAddress = "Mashhad, St. 2"
                         },
@@ -563,7 +566,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 3,
                             Email = "cust3@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6819),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9039),
                             Username = "customer3",
                             PreferredAddress = "Isfahan, St. 3"
                         },
@@ -572,7 +575,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 4,
                             Email = "cust4@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6820),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9041),
                             Username = "customer4",
                             PreferredAddress = "Shiraz, St. 4"
                         },
@@ -581,7 +584,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 5,
                             Email = "cust5@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6822),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9042),
                             Username = "customer5",
                             PreferredAddress = "Tabriz, St. 5"
                         },
@@ -590,7 +593,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 6,
                             Email = "cust6@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6823),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9044),
                             Username = "customer6",
                             PreferredAddress = "Karaj, St. 6"
                         },
@@ -599,7 +602,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 7,
                             Email = "cust7@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6824),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9045),
                             Username = "customer7",
                             PreferredAddress = "Qom, St. 7"
                         },
@@ -608,7 +611,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 8,
                             Email = "cust8@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6826),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9047),
                             Username = "customer8",
                             PreferredAddress = "Ahvaz, St. 8"
                         },
@@ -617,7 +620,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 9,
                             Email = "cust9@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6827),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9048),
                             Username = "customer9",
                             PreferredAddress = "Kermanshah, St. 9"
                         },
@@ -626,7 +629,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                             Id = 10,
                             Email = "cust10@example.com",
                             PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6828),
+                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9049),
                             Username = "customer10",
                             PreferredAddress = "Urmia, St. 10"
                         });

@@ -21,6 +21,10 @@ public partial class CityConfiguration
             builder.Property(u => u.PasswordHash)
                    .IsRequired();
 
+            builder.Property(u => u.Balance)
+                   .HasColumnType("decimal(18,2)") 
+                   .IsRequired(false);
+
             builder.HasMany(u => u.SentMessages)
                    .WithOne(m => m.Sender)
                    .HasForeignKey(m => m.SenderId)
@@ -35,7 +39,7 @@ public partial class CityConfiguration
                    .HasValue<Customer>("Customer")
                    .HasValue<Admin>("Admin")
                    .HasValue<Specialist>("Specialist");
-
         }
     }
+
 }

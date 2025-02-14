@@ -16,6 +16,8 @@ namespace Achare.src.Domain.Core.Entities
         [Required]
         public string PasswordHash { get; set; }
 
+        public decimal? Balance { get; set; }
+
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? ProfilePicture { get; set; }

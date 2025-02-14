@@ -51,6 +51,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -83,7 +84,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ServiceCategoryId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     BasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -172,7 +173,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderRequest",
+                name: "OrderRequests",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -184,15 +185,15 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderRequest", x => x.Id);
+                    table.PrimaryKey("PK_OrderRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderRequest_Orders_OrderId",
+                        name: "FK_OrderRequests_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OrderRequest_Users_SpecialistId",
+                        name: "FK_OrderRequests_Users_SpecialistId",
                         column: x => x.SpecialistId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -281,19 +282,19 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CityId", "Email", "FirstName", "LastName", "PasswordHash", "PreferredAddress", "ProfilePicture", "RegistrationDate", "UserType", "Username" },
+                columns: new[] { "Id", "Balance", "CityId", "Email", "FirstName", "LastName", "PasswordHash", "PreferredAddress", "ProfilePicture", "RegistrationDate", "UserType", "Username" },
                 values: new object[,]
                 {
-                    { 1, null, "cust1@example.com", null, null, "123456", "Tehran, St. 1", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6813), "Customer", "customer1" },
-                    { 2, null, "cust2@example.com", null, null, "123456", "Mashhad, St. 2", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6817), "Customer", "customer2" },
-                    { 3, null, "cust3@example.com", null, null, "123456", "Isfahan, St. 3", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6819), "Customer", "customer3" },
-                    { 4, null, "cust4@example.com", null, null, "123456", "Shiraz, St. 4", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6820), "Customer", "customer4" },
-                    { 5, null, "cust5@example.com", null, null, "123456", "Tabriz, St. 5", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6822), "Customer", "customer5" },
-                    { 6, null, "cust6@example.com", null, null, "123456", "Karaj, St. 6", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6823), "Customer", "customer6" },
-                    { 7, null, "cust7@example.com", null, null, "123456", "Qom, St. 7", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6824), "Customer", "customer7" },
-                    { 8, null, "cust8@example.com", null, null, "123456", "Ahvaz, St. 8", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6826), "Customer", "customer8" },
-                    { 9, null, "cust9@example.com", null, null, "123456", "Kermanshah, St. 9", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6827), "Customer", "customer9" },
-                    { 10, null, "cust10@example.com", null, null, "123456", "Urmia, St. 10", null, new DateTime(2025, 2, 14, 4, 28, 45, 833, DateTimeKind.Utc).AddTicks(6828), "Customer", "customer10" }
+                    { 1, null, null, "cust1@example.com", null, null, "123456", "Tehran, St. 1", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9032), "Customer", "customer1" },
+                    { 2, null, null, "cust2@example.com", null, null, "123456", "Mashhad, St. 2", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9037), "Customer", "customer2" },
+                    { 3, null, null, "cust3@example.com", null, null, "123456", "Isfahan, St. 3", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9039), "Customer", "customer3" },
+                    { 4, null, null, "cust4@example.com", null, null, "123456", "Shiraz, St. 4", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9041), "Customer", "customer4" },
+                    { 5, null, null, "cust5@example.com", null, null, "123456", "Tabriz, St. 5", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9042), "Customer", "customer5" },
+                    { 6, null, null, "cust6@example.com", null, null, "123456", "Karaj, St. 6", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9044), "Customer", "customer6" },
+                    { 7, null, null, "cust7@example.com", null, null, "123456", "Qom, St. 7", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9045), "Customer", "customer7" },
+                    { 8, null, null, "cust8@example.com", null, null, "123456", "Ahvaz, St. 8", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9047), "Customer", "customer8" },
+                    { 9, null, null, "cust9@example.com", null, null, "123456", "Kermanshah, St. 9", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9048), "Customer", "customer9" },
+                    { 10, null, null, "cust10@example.com", null, null, "123456", "Urmia, St. 10", null, new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9049), "Customer", "customer10" }
                 });
 
             migrationBuilder.InsertData(
@@ -301,16 +302,16 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                 columns: new[] { "Id", "BasePrice", "Description", "EstimatedDurationInMinutes", "Name", "Price", "ServiceCategoryId" },
                 values: new object[,]
                 {
-                    { 1, 0m, "نظافت کامل منزل توسط نیروی متخصص", 0, "نظافت منزل", 500000m, 1 },
-                    { 2, 0m, "شستشوی انواع فرش و موکت", 0, "شستشوی فرش", 300000m, 1 },
-                    { 3, 0m, "تعمیر یخچال، ماشین لباسشویی و ...", 0, "تعمیر لوازم خانگی", 700000m, 2 },
-                    { 4, 0m, "نقاشی داخلی و خارجی ساختمان", 0, "نقاشی ساختمان", 1200000m, 2 },
-                    { 5, 0m, "خدمات اصلاح و آرایش مو", 0, "اصلاح مو", 150000m, 3 },
-                    { 6, 0m, "میکاپ تخصصی عروس و مجالس", 0, "میکاپ", 800000m, 3 },
-                    { 7, 0m, "آموزش زبان انگلیسی با بهترین اساتید", 0, "کلاس زبان انگلیسی", 400000m, 4 },
-                    { 8, 0m, "آموزش انواع سازها", 0, "کلاس موسیقی", 500000m, 4 },
-                    { 9, 0m, "خدمات حمل و نقل اثاثیه", 0, "باربری و اثاث‌کشی", 2000000m, 5 },
-                    { 10, 0m, "جابجایی مسافران با خودروهای لوکس", 0, "حمل‌ونقل مسافران", 1000000m, 5 }
+                    { 1, 500000m, "نظافت کامل منزل توسط نیروی متخصص", 0, "نظافت منزل", 500000m, 1 },
+                    { 2, 300000m, "شستشوی انواع فرش و موکت", 0, "شستشوی فرش", 300000m, 1 },
+                    { 3, 700000m, "تعمیر یخچال، ماشین لباسشویی و ...", 0, "تعمیر لوازم خانگی", 700000m, 2 },
+                    { 4, 1200000m, "نقاشی داخلی و خارجی ساختمان", 0, "نقاشی ساختمان", 1200000m, 2 },
+                    { 5, 150000m, "خدمات اصلاح و آرایش مو", 0, "اصلاح مو", 150000m, 3 },
+                    { 6, 800000m, "میکاپ تخصصی عروس و مجالس", 0, "میکاپ", 800000m, 3 },
+                    { 7, 400000m, "آموزش زبان انگلیسی با بهترین اساتید", 0, "کلاس زبان انگلیسی", 400000m, 4 },
+                    { 8, 500000m, "آموزش انواع سازها", 0, "کلاس موسیقی", 500000m, 4 },
+                    { 9, 2000000m, "خدمات حمل و نقل اثاثیه", 0, "باربری و اثاث‌کشی", 2000000m, 5 },
+                    { 10, 1000000m, "جابجایی مسافران با خودروهای لوکس", 0, "حمل‌ونقل مسافران", 1000000m, 5 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -329,13 +330,13 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderRequest_OrderId",
-                table: "OrderRequest",
+                name: "IX_OrderRequests_OrderId",
+                table: "OrderRequests",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderRequest_SpecialistId",
-                table: "OrderRequest",
+                name: "IX_OrderRequests_SpecialistId",
+                table: "OrderRequests",
                 column: "SpecialistId");
 
             migrationBuilder.CreateIndex(
@@ -386,7 +387,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
-                name: "OrderRequest");
+                name: "OrderRequests");
 
             migrationBuilder.DropTable(
                 name: "Payments");

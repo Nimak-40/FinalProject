@@ -27,6 +27,7 @@ namespace Achare.Infrastructure
         public DbSet<ServiceCategory> ServiceCategories { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderRequest> OrderRequests { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
