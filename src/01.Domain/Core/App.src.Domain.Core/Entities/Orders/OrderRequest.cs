@@ -1,7 +1,8 @@
 ﻿using Achare.src.Domain.Core.Enums;
+using App.src.Domain.Core.Entities.UserEntities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Achare.src.Domain.Core.Entities
+namespace App.src.Domain.Core.Entities.Orders
 {
     public class OrderRequest
     {

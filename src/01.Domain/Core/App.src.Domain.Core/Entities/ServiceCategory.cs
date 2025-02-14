@@ -12,7 +12,7 @@ namespace Achare.src.Domain.Core.Entities
         public string? Icon { get; set; }
         public string? Description { get; set; }
 
-        public virtual ICollection<Service> Services { get; set; } = new List<Service>();
+        public virtual ICollection<Service>? Services { get; set; } = new List<Service>();
 
     }
 }

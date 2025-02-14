@@ -1,4 +1,4 @@
-﻿namespace Achare.src.Domain.Core.Entities
+﻿namespace App.src.Domain.Core.Entities.UserEntities
 {
     public class Customer : User
     {

@@ -1,4 +1,6 @@
 ﻿using Achare.src.Domain.Core.Entities;
+using App.src.Domain.Core.Entities.Orders;
+using App.src.Domain.Core.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;

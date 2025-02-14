@@ -1,4 +1,4 @@
-﻿using Achare.src.Domain.Core.Entities;
+﻿using App.src.Domain.Core.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +14,7 @@ public partial class CityConfiguration
             builder.HasMany(c => c.Orders)
                    .WithOne(o => o.Customer)
                    .HasForeignKey(o => o.CustomerId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasData(
             new Customer { Id = 1, Username = "customer1", Email = "cust1@example.com", PasswordHash = "123456", PreferredAddress = "Tehran, St. 1" },

@@ -1,5 +1,7 @@
 ﻿using Achare.src.Domain.Core.Entities;
 using Achare.src.Domain.Core.Enums;
+using App.src.Domain.Core.Entities.Orders;
+using App.src.Domain.Core.Entities.UserEntities;
 using System.ComponentModel.DataAnnotations;
 
 public class Order

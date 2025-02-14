@@ -16,12 +16,12 @@ public partial class CityConfiguration
             builder.HasMany(o => o.Payments)
                    .WithOne(p => p.Order)
                    .HasForeignKey(p => p.OrderId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(o => o.Reviews)
                    .WithOne(r => r.Order)
                    .HasForeignKey(r => r.OrderId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(o => o.ChatMessages)
                    .WithOne(m => m.Order)

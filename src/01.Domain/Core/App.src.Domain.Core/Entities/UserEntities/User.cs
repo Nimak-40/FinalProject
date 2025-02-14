@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Achare.src.Domain.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace Achare.src.Domain.Core.Entities
+namespace App.src.Domain.Core.Entities.UserEntities
 {
     public abstract class User
     {

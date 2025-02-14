@@ -1,4 +1,4 @@
-﻿using Achare.src.Domain.Core.Entities;
+﻿using App.src.Domain.Core.Entities.Orders;
 
 namespace App.src.Domain.Core.Contracts.Repositories
 {
