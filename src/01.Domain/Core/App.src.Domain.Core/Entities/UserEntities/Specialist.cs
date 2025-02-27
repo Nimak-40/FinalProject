@@ -16,9 +16,9 @@ namespace App.src.Domain.Core.Entities.UserEntities
 
         public bool IsAvailable { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>(); 
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
-        public virtual ICollection<OrderRequest> OrderRequests { get; set; } = new List<OrderRequest>();
+        public virtual ICollection<Offers> OffersRequests { get; set; } = new List<Offers>();
     }
 }
 

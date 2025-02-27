@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public partial class CityConfiguration
 {
-    public class OrderRequestConfiguration : IEntityTypeConfiguration<OrderRequest>
+    public class OrderRequestConfiguration : IEntityTypeConfiguration<Offers>
     {
-        public void Configure(EntityTypeBuilder<OrderRequest> builder)
+        public void Configure(EntityTypeBuilder<Offers> builder)
         {
             builder.HasKey(or => or.Id);
 

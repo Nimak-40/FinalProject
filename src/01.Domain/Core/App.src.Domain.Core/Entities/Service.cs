@@ -4,27 +4,30 @@ namespace Achare.src.Domain.Core.Entities
 {
     public class Service
     {
-        public int Id { get; set; }
+        
 
-        [Required]
-        public int ServiceCategoryId { get; set; }
+    #region Properties
+    [Key]
+    public int Id { get; set; }
+    [MaxLength(100)]
+    [Required]
+    public string Title { get; set; } = null!;
+    [MaxLength(500)]
+    public string? ImagePath { get; set; }
+    [Required]
+    public int Price { get; set; }
+    [MaxLength(255)]
+    [Required]
+    public string Description { get; set; } = null!;
+    public bool IsActive { get; set; } = true;
+    #endregion
 
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        [Range(18, 2)]
-        public double Price { get; set; }
-
-        public string? Description { get; set; }
-
-        [Range(0, double.MaxValue)]
-        public decimal BasePrice { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int EstimatedDurationInMinutes { get; set; }
-
-        public virtual ServiceCategory ServiceCategory { get; set; }
-    }
+    #region NavigationProperties
+    public int SubCategoryId { get; set; }
+    public SubCategory? SubCategory { get; set; }
+    public List<Order> Orders { get; set; } = [];
+    #endregion
+}
+    
 }
 

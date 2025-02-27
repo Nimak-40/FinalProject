@@ -1,6 +1,6 @@
 ﻿namespace Achare.src.Domain.Core.Enums
 {
-    public enum OrderStatus
+    public enum OrderStatusEnum
     {
         Pending,
         Confirmed,

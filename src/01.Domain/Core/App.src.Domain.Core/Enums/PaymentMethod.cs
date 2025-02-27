@@ -1,6 +1,6 @@
 ﻿namespace Achare.src.Domain.Core.Enums
 {
-    public enum PaymentMethod
+    public enum PaymentMethodEnum
     {
         Online,
         Cash,

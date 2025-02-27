@@ -4,12 +4,12 @@ namespace App.src.Domain.Core.Contracts.Repositories
 {
     public interface IOrderRequestRepository
     {
-        Task<List<OrderRequest>> GetAllAsync();
-        Task<OrderRequest?> GetByIdAsync(int id);
-        Task<List<OrderRequest>> GetByOrderIdAsync(int orderId);
-        Task<List<OrderRequest>> GetBySpecialistIdAsync(int specialistId);
-        Task AddAsync(OrderRequest orderRequest);
-        Task UpdateAsync(OrderRequest orderRequest);
+        Task<List<Offers>> GetAllAsync();
+        Task<Offers?> GetByIdAsync(int id);
+        Task<List<Offers>> GetByOrderIdAsync(int orderId);
+        Task<List<Offers>> GetBySpecialistIdAsync(int specialistId);
+        Task AddAsync(Offers orderRequest);
+        Task UpdateAsync(Offers orderRequest);
         Task DeleteAsync(int id);
     }
 }

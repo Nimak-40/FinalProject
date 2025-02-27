@@ -1,5 +1,6 @@
 ﻿using Achare.src.Domain.Core.Entities;
 using Achare.src.Domain.Core.Enums;
+using App.src.Domain.Core.Entities.BaseEntities;
 using App.src.Domain.Core.Entities.Orders;
 using App.src.Domain.Core.Entities.UserEntities;
 using System.ComponentModel.DataAnnotations;
@@ -19,14 +20,14 @@ public class Order
     public DateTime ScheduledDate { get; set; }
 
     [Required]
-    public OrderStatus Status { get; set; }
+    public OrderStatusEnum Status { get; set; }
 
     [Range(0, double.MaxValue)]
     public decimal TotalAmount { get; set; }
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
-    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
-    public virtual ICollection<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
+    public virtual ICollection<Payment>? Payments { get; set; } = new List<Payment>();
+    public virtual ICollection<Review>? Reviews { get; set; } = new List<Review>();
+    public virtual ICollection<Comment>? Comments { get; set; } = new List<Comment>();
 
-    public virtual ICollection<OrderRequest> OrderRequests { get; set; } = new List<OrderRequest>();
+    public virtual ICollection<Offers>? OrderOffers{ get; set; } = new List<Offers>();
 }

@@ -11,6 +11,7 @@ public partial class CityConfiguration
             builder.Property(a => a.AdminCode)
                    .IsRequired()
                    .HasMaxLength(50);
+            builder.ToTable(nameof(Admin));
         }
     }
 

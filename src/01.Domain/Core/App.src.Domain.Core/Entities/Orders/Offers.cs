@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace App.src.Domain.Core.Entities.Orders
 {
-    public class OrderRequest
+    public class Offers
     {
+        //description,suggestion,price
         public int Id { get; set; }
 
         [Required]
@@ -16,9 +17,10 @@ namespace App.src.Domain.Core.Entities.Orders
         public int SpecialistId { get; set; }
         public virtual Specialist Specialist { get; set; }
 
-        public RequestStatus Status { get; set; } = RequestStatus.Pending;
+        public RequestStatusEnum Status { get; set; } = RequestStatusEnum.Pending;
         public DateTime RequestDate { get; set; } = DateTime.UtcNow;
     }
+
 
 }
 

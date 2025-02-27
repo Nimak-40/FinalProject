@@ -1,6 +1,6 @@
 ﻿namespace Achare.src.Domain.Core.Enums
 {
-    public enum PaymentStatus
+    public enum PaymentStatusEnum
     {
         Pending,
         Successful,

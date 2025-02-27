@@ -1,4 +1,4 @@
-﻿using Achare.src.Domain.Core.Entities;
+﻿using App.src.Domain.Core.Entities.BaseEntities;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.src.Domain.Core.Entities.UserEntities

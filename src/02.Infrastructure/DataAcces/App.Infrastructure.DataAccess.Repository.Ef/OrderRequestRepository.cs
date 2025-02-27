@@ -14,7 +14,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
             _dbContext = dbContext;
         }
 
-        public async Task<List<OrderRequest>> GetAllAsync()
+        public async Task<List<Offers>> GetAllAsync()
         {
             return await _dbContext.OrderRequests
                                    .AsNoTracking()
@@ -23,7 +23,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                                    .ToListAsync();
         }
 
-        public async Task<OrderRequest?> GetByIdAsync(int id)
+        public async Task<Offers?> GetByIdAsync(int id)
         {
             return await _dbContext.OrderRequests
                                    .AsNoTracking()
@@ -32,7 +32,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                                    .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<List<OrderRequest>> GetByOrderIdAsync(int orderId)
+        public async Task<List<Offers>> GetByOrderIdAsync(int orderId)
         {
             return await _dbContext.OrderRequests
                                    .AsNoTracking()
@@ -41,7 +41,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                                    .ToListAsync();
         }
 
-        public async Task<List<OrderRequest>> GetBySpecialistIdAsync(int specialistId)
+        public async Task<List<Offers>> GetBySpecialistIdAsync(int specialistId)
         {
             return await _dbContext.OrderRequests
                                    .AsNoTracking()
@@ -50,13 +50,13 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                                    .ToListAsync();
         }
 
-        public async Task AddAsync(OrderRequest orderRequest)
+        public async Task AddAsync(Offers orderRequest)
         {
             await _dbContext.OrderRequests.AddAsync(orderRequest);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(OrderRequest orderRequest)
+        public async Task UpdateAsync(Offers orderRequest)
         {
             var existingOrderRequest = await _dbContext.OrderRequests
                                                      .FirstOrDefaultAsync(r => r.Id == orderRequest.Id);

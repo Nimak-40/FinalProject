@@ -1,6 +1,6 @@
 ﻿namespace Achare.src.Domain.Core.Enums
 {
-    public enum RequestStatus
+    public enum RequestStatusEnum
     {
         Pending,
         Approved,
