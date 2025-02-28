@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace App.Infrastructure.DataAccess.Repository.Ef
@@ -23,13 +22,14 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         {
             return await _dbContext.Users
                                    .AsNoTracking()
+                                   .Include(u => u.City) // اضافه کردن City
                                    .ToListAsync();
         }
 
         public async Task<User?> GetByIdAsync(int id)
         {
             return await _dbContext.Users
-                                   .AsNoTracking()
+                                   .Include(u => u.City) // اضافه کردن City
                                    .FirstOrDefaultAsync(u => u.Id == id);
         }
 
@@ -37,7 +37,8 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         {
             return await _dbContext.Users
                                    .AsNoTracking()
-                                   .FirstOrDefaultAsync(u => u.Username == username);
+                                   .Include(u => u.City) // اضافه کردن City
+                                   .FirstOrDefaultAsync(u => u.UserName == username);
         }
 
         public async Task AddAsync(User user)
@@ -49,18 +50,23 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         public async Task UpdateAsync(User user)
         {
             var existingUser = await _dbContext.Users
-                                                .FirstOrDefaultAsync(u => u.Id == user.Id);
+                                               .Include(u => u.City) // اطمینان از بارگذاری City
+                                               .FirstOrDefaultAsync(u => u.Id == user.Id);
 
             if (existingUser != null)
             {
-                existingUser.Username = user.Username;
+                existingUser.UserName = user.UserName;
                 existingUser.Email = user.Email;
                 existingUser.PasswordHash = user.PasswordHash;
                 existingUser.FirstName = user.FirstName;
                 existingUser.LastName = user.LastName;
-                existingUser.ProfilePicture = user.ProfilePicture;
+                existingUser.ImagePath = user.ImagePath;
                 existingUser.CityId = user.CityId;
-                existingUser.City = user.City;
+
+                if (user.City != null) // بررسی مقداردهی به City
+                {
+                    existingUser.City = user.City;
+                }
 
                 await _dbContext.SaveChangesAsync();
             }

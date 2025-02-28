@@ -1,15 +1,15 @@
 ﻿using Achare.src.Domain.Core.Entities;
+using App.src.Domain.Core.Entities.BaseEntities;
 
 namespace App.src.Domain.Core.Contracts.Repositories
 {
-    public interface IChatMessageRepository
+    public interface ICommentRepository
     {
-        Task<List<ChatMessage>> GetAllAsync();
-        Task<ChatMessage?> GetByIdAsync(int id);
-        Task<List<ChatMessage>> GetBySenderIdAsync(int senderId);
-        Task<List<ChatMessage>> GetByReceiverIdAsync(int receiverId);
-        Task AddAsync(ChatMessage chatMessage);
-        Task UpdateAsync(ChatMessage chatMessage);
+        Task AddAsync(Comment comment);
         Task DeleteAsync(int id);
+        Task<List<Comment>> GetAllAsync();
+        Task<Comment?> GetByIdAsync(int id);
+        Task<List<Comment>> GetByOrderIdAsync(int orderId);
+        Task UpdateAsync(Comment comment);
     }
 }

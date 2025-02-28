@@ -18,6 +18,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         {
             return await _dbContext.Specialists
                                    .AsNoTracking()
+                                   .Include(s => s.User) // اضافه کردن User
                                    .ToListAsync();
         }
 
@@ -25,14 +26,16 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         {
             return await _dbContext.Specialists
                                    .AsNoTracking()
-                                   .FirstOrDefaultAsync(s => s.Id == id);
+                                   .Include(s => s.User) // اضافه کردن User
+                                   .FirstOrDefaultAsync(s => s.UserId == id);
         }
 
         public async Task<Specialist?> GetByUsernameAsync(string username)
         {
             return await _dbContext.Specialists
                                    .AsNoTracking()
-                                   .FirstOrDefaultAsync(s => s.Username == username);
+                                   .Include(s => s.User) // اضافه کردن User
+                                   .FirstOrDefaultAsync(s => s.User != null && s.User.UserName == username);
         }
 
         public async Task AddAsync(Specialist specialist)
@@ -44,18 +47,20 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         public async Task UpdateAsync(Specialist specialist)
         {
             var existingSpecialist = await _dbContext.Specialists
-                                                      .FirstOrDefaultAsync(s => s.Id == specialist.Id);
+                                                     .Include(s => s.User) // اضافه کردن User
+                                                     .FirstOrDefaultAsync(s => s.UserId == specialist.UserId);
 
-            if (existingSpecialist != null)
+            if (existingSpecialist != null && existingSpecialist.User != null)
             {
-                existingSpecialist.Username = specialist.Username;
-                existingSpecialist.Email = specialist.Email;
-                existingSpecialist.PasswordHash = specialist.PasswordHash;
-                existingSpecialist.FirstName = specialist.FirstName;
-                existingSpecialist.LastName = specialist.LastName;
-                existingSpecialist.ProfilePicture = specialist.ProfilePicture;
-                existingSpecialist.CityId = specialist.CityId;
-                existingSpecialist.City = specialist.City;
+                // بروزرسانی اطلاعات User
+                existingSpecialist.User.UserName = specialist.User.UserName;
+                existingSpecialist.User.Email = specialist.User.Email;
+                existingSpecialist.User.PasswordHash = specialist.User.PasswordHash;
+                existingSpecialist.User.FirstName = specialist.User.FirstName;
+                existingSpecialist.User.LastName = specialist.User.LastName;
+                existingSpecialist.User.ImagePath = specialist.User.ImagePath;
+
+                // بروزرسانی اطلاعات Specialist
                 existingSpecialist.Specialty = specialist.Specialty;
                 existingSpecialist.Resume = specialist.Resume;
                 existingSpecialist.Certificates = specialist.Certificates;

@@ -29,5 +29,5 @@ public class Order
     public virtual ICollection<Review>? Reviews { get; set; } = new List<Review>();
     public virtual ICollection<Comment>? Comments { get; set; } = new List<Comment>();
 
-    public virtual ICollection<Offers>? OrderOffers{ get; set; } = new List<Offers>();
+    public virtual ICollection<Offer>? OrderOffers{ get; set; } = new List<Offer>();
 }

@@ -32,7 +32,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         {
             return await _dbContext.Services
                                    .AsNoTracking()
-                                   .Where(s => s.ServiceCategoryId == categoryId)
+                                   .Where(s => s.SubCategoryId == categoryId)
                                    .ToListAsync();
         }
 
@@ -49,13 +49,11 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
 
             if (existingService != null)
             {
-                existingService.ServiceCategoryId = service.ServiceCategoryId;
-                existingService.Name = service.Name;
+                existingService.SubCategoryId = service.SubCategoryId;
+                existingService.Title = service.Title;
                 existingService.Price = service.Price;
                 existingService.Description = service.Description;
-                existingService.BasePrice = service.BasePrice;
-                existingService.EstimatedDurationInMinutes = service.EstimatedDurationInMinutes;
-
+                existingService.Price = service.Price;
                 await _dbContext.SaveChangesAsync();
             }
         }

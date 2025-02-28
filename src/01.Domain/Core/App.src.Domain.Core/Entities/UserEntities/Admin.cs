@@ -2,10 +2,21 @@
 
 namespace App.src.Domain.Core.Entities.UserEntities
 {
-    public class Admin : User
+    public class Admin
     {
-        [Required]
-        public string AdminCode { get; set; }
+        #region Properties
+        [Key]
+        public string? AdminCode { get; set; }
+        public int Id { get; set; }
+
+
+        #endregion
+
+        #region NavigationProperties
+        public int UserId { get; set; }
+        public User? User { get; set; }
+        #endregion
+
     }
 }
 

@@ -19,6 +19,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
             return await _dbContext.Customers
                                    .AsNoTracking()
                                    .Include(c => c.Orders)
+                                   .Include(c => c.User) // اضافه کردن User برای دسترسی به UserName
                                    .ToListAsync();
         }
 
@@ -27,6 +28,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
             return await _dbContext.Customers
                                    .AsNoTracking()
                                    .Include(c => c.Orders)
+                                   .Include(c => c.User) // اضافه کردن User
                                    .FirstOrDefaultAsync(c => c.Id == id);
         }
 
@@ -34,7 +36,8 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
         {
             return await _dbContext.Customers
                                    .AsNoTracking()
-                                   .FirstOrDefaultAsync(c => c.Username == username);
+                                   .Include(c => c.User) // اضافه کردن User
+                                   .FirstOrDefaultAsync(c => c.User != null && c.User.UserName == username);
         }
 
         public async Task AddAsync(Customer customer)
@@ -50,7 +53,8 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
 
             if (existingCustomer != null)
             {
-                existingCustomer.PreferredAddress = customer.PreferredAddress;
+                // اینجا باید ویژگی‌هایی که قرار است به‌روزرسانی شوند را مشخص کنیم
+                existingCustomer.CityId = customer.CityId;
 
                 await _dbContext.SaveChangesAsync();
             }

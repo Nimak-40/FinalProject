@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public partial class CityConfiguration
-{
+
     public class ReviewConfiguration : IEntityTypeConfiguration<Review>
     {
         public void Configure(EntityTypeBuilder<Review> builder)
@@ -30,5 +29,3 @@ public partial class CityConfiguration
         }
     }
 
-
-}

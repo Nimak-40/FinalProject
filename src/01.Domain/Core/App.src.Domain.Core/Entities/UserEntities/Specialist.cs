@@ -1,9 +1,10 @@
-﻿using App.src.Domain.Core.Entities.Orders;
+﻿using Achare.src.Domain.Core.Entities;
+using App.src.Domain.Core.Entities.Orders;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.src.Domain.Core.Entities.UserEntities
 {
-    public class Specialist : User
+    public class Specialist 
     {
         [Required]
         public string Specialty { get; set; }
@@ -15,10 +16,12 @@ namespace App.src.Domain.Core.Entities.UserEntities
         public double Rating { get; set; }
 
         public bool IsAvailable { get; set; }
-
+        public int UserId { get; set; }
+        public User? User { get; set; }
+        public virtual ICollection<Service> Services { get; set; } = new List<Service>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>(); 
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
-        public virtual ICollection<Offers> OffersRequests { get; set; } = new List<Offers>();
+        public virtual ICollection<Offer> OffersRequests { get; set; } = new List<Offer>();
     }
 }
 

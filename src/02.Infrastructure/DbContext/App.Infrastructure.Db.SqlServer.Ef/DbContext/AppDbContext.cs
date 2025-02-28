@@ -2,20 +2,15 @@
 using App.src.Domain.Core.Entities.BaseEntities;
 using App.src.Domain.Core.Entities.Orders;
 using App.src.Domain.Core.Entities.UserEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static CityConfiguration;
-
-
+using App.src.Infrastructure.Persistence.Configurations;
+using Achare.src.Infrastructure.Persistence.Configurations;
 
 namespace Achare.Infrastructure
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -23,31 +18,37 @@ namespace Achare.Infrastructure
         }
 
         public DbSet<City> Cities { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Admin> Admins { get; set; }
-        public DbSet<Specialist> Specialists { get; set; }
-        public DbSet<ServiceCategory> ServiceCategories { get; set; }
-        public DbSet<Service> Services { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Offer> Offers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Offers> OrderRequests { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Specialist> Specialists { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CityConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            base.OnModelCreating(modelBuilder); // این خط تنظیمات Identity را اعمال می‌کند
+
             modelBuilder.ApplyConfiguration(new AdminConfiguration());
-            modelBuilder.ApplyConfiguration(new SpecialistConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new OfferConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
-            modelBuilder.ApplyConfiguration(new ChatMessageConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderRequestConfiguration());
-            modelBuilder.ApplyConfiguration(new ServiceCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentConfiguration());
+            modelBuilder.ApplyConfiguration(new ReviewConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new SpecialistConfiguration());
+            modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
+
+            // فراخوانی متد SeedUsers برای مقداردهی اولیه کاربران
+            UserConfiguration.SeedUsers(modelBuilder);
         }
     }
-
 }

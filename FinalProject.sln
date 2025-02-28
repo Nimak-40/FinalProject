@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Infrastructure.DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Infrastructure.Db.SqlServer.Ef", "src\02.Infrastructure\DbContext\App.Infrastructure.Db.SqlServer.Ef\App.Infrastructure.Db.SqlServer.Ef.csproj", "{C3B33163-47BD-42D1-9479-FE1C4E9D790C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAplication.MVC", "src\03.EndPiont\WebAplication.MVC\WebAplication.MVC.csproj", "{A4292B6E-F9EE-43E6-B437-4D5971580AEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAplication", "src\03.EndPiont\WebAplication\WebAplication.csproj", "{55AB79BB-EA7F-4576-B586-A28DAD66FF4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{C3B33163-47BD-42D1-9479-FE1C4E9D790C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B33163-47BD-42D1-9479-FE1C4E9D790C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B33163-47BD-42D1-9479-FE1C4E9D790C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4292B6E-F9EE-43E6-B437-4D5971580AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4292B6E-F9EE-43E6-B437-4D5971580AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4292B6E-F9EE-43E6-B437-4D5971580AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4292B6E-F9EE-43E6-B437-4D5971580AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55AB79BB-EA7F-4576-B586-A28DAD66FF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55AB79BB-EA7F-4576-B586-A28DAD66FF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55AB79BB-EA7F-4576-B586-A28DAD66FF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55AB79BB-EA7F-4576-B586-A28DAD66FF4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +67,6 @@ Global
 		{D297EA13-ABC8-4568-99D9-ECFDEBE80C4A} = {95594BF3-2A08-4836-BD2C-1A8ADAAD6B45}
 		{12576901-962D-467B-8B55-F184BC99C35B} = {F62E7464-3D92-4430-8506-639FC967C98D}
 		{C3B33163-47BD-42D1-9479-FE1C4E9D790C} = {D297EA13-ABC8-4568-99D9-ECFDEBE80C4A}
-		{A4292B6E-F9EE-43E6-B437-4D5971580AEC} = {9EE42E24-6BFE-4AB6-8FBA-A6A52EE7F038}
+		{55AB79BB-EA7F-4576-B586-A28DAD66FF4F} = {9EE42E24-6BFE-4AB6-8FBA-A6A52EE7F038}
 	EndGlobalSection
 EndGlobal

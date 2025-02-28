@@ -22,7 +22,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.ChatMessage", b =>
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,35 +30,91 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Message")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SentDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("ChatMessages");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.City", b =>
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("Services", (string)null);
+                });
+
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.SubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("SubCategories");
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.BaseEntities.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,7 +199,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.OrderRequest", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.BaseEntities.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,8 +207,53 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.Orders.Offer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
@@ -164,16 +265,19 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Suggestion")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("SpecialistId");
 
-                    b.ToTable("OrderRequests");
+                    b.ToTable("Offers");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Payment", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.Orders.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -191,7 +295,9 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -203,7 +309,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Review", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.Orders.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,30 +318,35 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("ReviewDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<int?>("SpecialistId")
+                    b.Property<int?>("SpecialistUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("SpecialistId");
+                    b.HasIndex("SpecialistUserId");
 
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Service", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Admin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,241 +354,512 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("BasePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("AdminCode")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            UserId = 1
+                        });
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasMaxLength(100)
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CityId = 1,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CityId = 1,
+                            UserId = 4
+                        });
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Specialist", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Certificates")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Resume")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Specialists");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 2,
+                            IsAvailable = true,
+                            Rating = 4.5,
+                            Specialty = "Plumbing"
+                        });
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("CityId")
+                        .HasMaxLength(255)
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("ImagePath")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("EstimatedDurationInMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ServiceCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServiceCategoryId");
-
-                    b.ToTable("Services");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BasePrice = 500000m,
-                            Description = "نظافت کامل منزل توسط نیروی متخصص",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "نظافت منزل",
-                            Price = 500000m,
-                            ServiceCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BasePrice = 300000m,
-                            Description = "شستشوی انواع فرش و موکت",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "شستشوی فرش",
-                            Price = 300000m,
-                            ServiceCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BasePrice = 700000m,
-                            Description = "تعمیر یخچال، ماشین لباسشویی و ...",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "تعمیر لوازم خانگی",
-                            Price = 700000m,
-                            ServiceCategoryId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BasePrice = 1200000m,
-                            Description = "نقاشی داخلی و خارجی ساختمان",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "نقاشی ساختمان",
-                            Price = 1200000m,
-                            ServiceCategoryId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BasePrice = 150000m,
-                            Description = "خدمات اصلاح و آرایش مو",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "اصلاح مو",
-                            Price = 150000m,
-                            ServiceCategoryId = 3
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BasePrice = 800000m,
-                            Description = "میکاپ تخصصی عروس و مجالس",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "میکاپ",
-                            Price = 800000m,
-                            ServiceCategoryId = 3
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BasePrice = 400000m,
-                            Description = "آموزش زبان انگلیسی با بهترین اساتید",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "کلاس زبان انگلیسی",
-                            Price = 400000m,
-                            ServiceCategoryId = 4
-                        },
-                        new
-                        {
-                            Id = 8,
-                            BasePrice = 500000m,
-                            Description = "آموزش انواع سازها",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "کلاس موسیقی",
-                            Price = 500000m,
-                            ServiceCategoryId = 4
-                        },
-                        new
-                        {
-                            Id = 9,
-                            BasePrice = 2000000m,
-                            Description = "خدمات حمل و نقل اثاثیه",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "باربری و اثاث‌کشی",
-                            Price = 2000000m,
-                            ServiceCategoryId = 5
-                        },
-                        new
-                        {
-                            Id = 10,
-                            BasePrice = 1000000m,
-                            Description = "جابجایی مسافران با خودروهای لوکس",
-                            EstimatedDurationInMinutes = 0,
-                            Name = "حمل‌ونقل مسافران",
-                            Price = 1000000m,
-                            ServiceCategoryId = 5
-                        });
-                });
-
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.ServiceCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiceCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "نظافت"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "تعمیرات"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "خدمات زیبایی"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "آموزش"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "حمل و نقل"
-                        });
-                });
-
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal?>("Balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProfilePicture")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.HasDiscriminator<string>("UserType").HasValue("User");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.UseTphMappingStrategy();
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            Balance = 100000m,
+                            CityId = 1,
+                            ConcurrencyStamp = "9bd4523a-27e0-492b-b72d-9612eecb549b",
+                            Email = "Admin@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Ali",
+                            LastName = "Ahmadi",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDcx7SzaWpzGfXa2ZGImyJqPaOXXoWCn++YN3BDtCrI+PEIkLmKpyi3qIw7DRoth1g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "60cb9fba-db92-40ad-8ff6-4ba659d32d15",
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            Balance = 100000m,
+                            CityId = 1,
+                            ConcurrencyStamp = "28e0fc81-c2c8-4d79-b6e5-734d3e822c66",
+                            Email = "Specialist@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Reza",
+                            LastName = "Taheri",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SPECIALIST@GMAIL.COM",
+                            NormalizedUserName = "SPECIALIST@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEslX3qqhcTR9cbz1JhOy2jpt5ZAtDbuHT2neGvMgQIeby5umS/YHvF1UTejdiqG2Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "87980991-4a2a-41c2-8c76-ba4dd3547248",
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Specialist@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            Balance = 100000m,
+                            CityId = 1,
+                            ConcurrencyStamp = "161ce287-4552-4f4e-93b4-a043e93d9db6",
+                            Email = "Customer1@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Sara",
+                            LastName = "Mohammadi",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CUSTOMER1@GMAIL.COM",
+                            NormalizedUserName = "CUSTOMER1@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDS5r0Z/8nataiQ3TwDdoaha+yb7ohoSAzaLjyEQtrhznCTRY5Hl2TLO+JDOCJGcWQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a63b0013-4502-43a7-bfd6-b73f9c16cd31",
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Customer1@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            Balance = 100000m,
+                            CityId = 1,
+                            ConcurrencyStamp = "928c6978-3310-48fc-9896-6387cfcbd099",
+                            Email = "Customer2@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Mina",
+                            LastName = "Hosseini",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CUSTOMER2@GMAIL.COM",
+                            NormalizedUserName = "CUSTOMER2@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDYETS4eZ/N8OsbCgqBh2SS9keTidD3rMxYt6ru6VUrEkCT/Qj0yD4Re2FHRATimgA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "43081efd-0421-4a24-8ef0-d5d97867410b",
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Customer2@gmail.com"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Expert",
+                            NormalizedName = "EXPERT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Admin",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Admin@gmail.com",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Expert",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Specialist@gmail.com",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Customer",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Customer1@gmail.com",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Customer",
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Customer2@gmail.com",
+                            UserId = 4
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            RoleId = 3
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Order", b =>
@@ -500,7 +882,7 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SpecialistId")
+                    b.Property<int?>("SpecialistUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -515,189 +897,76 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.HasIndex("SpecialistId");
+                    b.HasIndex("SpecialistUserId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Admin", b =>
+            modelBuilder.Entity("ServiceSpecialist", b =>
                 {
-                    b.HasBaseType("Achare.src.Domain.Core.Entities.User");
+                    b.Property<int>("ServicesId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("AdminCode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("SpecialistsUserId")
+                        .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("Admin");
+                    b.HasKey("ServicesId", "SpecialistsUserId");
+
+                    b.HasIndex("SpecialistsUserId");
+
+                    b.ToTable("ServiceSpecialist");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Customer", b =>
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Service", b =>
                 {
-                    b.HasBaseType("Achare.src.Domain.Core.Entities.User");
+                    b.HasOne("Achare.src.Domain.Core.Entities.SubCategory", "SubCategory")
+                        .WithMany("Services")
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<string>("PreferredAddress")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasDiscriminator().HasValue("Customer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "cust1@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9032),
-                            Username = "customer1",
-                            PreferredAddress = "Tehran, St. 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "cust2@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9037),
-                            Username = "customer2",
-                            PreferredAddress = "Mashhad, St. 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "cust3@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9039),
-                            Username = "customer3",
-                            PreferredAddress = "Isfahan, St. 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "cust4@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9041),
-                            Username = "customer4",
-                            PreferredAddress = "Shiraz, St. 4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Email = "cust5@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9042),
-                            Username = "customer5",
-                            PreferredAddress = "Tabriz, St. 5"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Email = "cust6@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9044),
-                            Username = "customer6",
-                            PreferredAddress = "Karaj, St. 6"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Email = "cust7@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9045),
-                            Username = "customer7",
-                            PreferredAddress = "Qom, St. 7"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "cust8@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9047),
-                            Username = "customer8",
-                            PreferredAddress = "Ahvaz, St. 8"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Email = "cust9@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9048),
-                            Username = "customer9",
-                            PreferredAddress = "Kermanshah, St. 9"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Email = "cust10@example.com",
-                            PasswordHash = "123456",
-                            RegistrationDate = new DateTime(2025, 2, 14, 7, 48, 56, 614, DateTimeKind.Utc).AddTicks(9049),
-                            Username = "customer10",
-                            PreferredAddress = "Urmia, St. 10"
-                        });
+                    b.Navigation("SubCategory");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Specialist", b =>
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.SubCategory", b =>
                 {
-                    b.HasBaseType("Achare.src.Domain.Core.Entities.User");
+                    b.HasOne("Achare.src.Domain.Core.Entities.Category", "Category")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Certificates")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("Rating")
-                        .ValueGeneratedOnAdd()
-                        .HasPrecision(2, 1)
-                        .HasColumnType("float(2)")
-                        .HasDefaultValue(0.0);
-
-                    b.Property<string>("Resume")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Specialty")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasDiscriminator().HasValue("Specialist");
+                    b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.ChatMessage", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.BaseEntities.Comment", b =>
                 {
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.Customer", "Customer")
+                        .WithMany("Comments")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Order", "Order")
-                        .WithMany("ChatMessages")
+                        .WithMany("Comments")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Achare.src.Domain.Core.Entities.User", "Receiver")
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Achare.src.Domain.Core.Entities.User", "Sender")
-                        .WithMany("SentMessages")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Customer");
 
                     b.Navigation("Order");
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.OrderRequest", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.Orders.Offer", b =>
                 {
                     b.HasOne("Order", "Order")
-                        .WithMany("OrderRequests")
+                        .WithMany("OrderOffers")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Achare.src.Domain.Core.Entities.Specialist", "Specialist")
-                        .WithMany("OrderRequests")
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.Specialist", "Specialist")
+                        .WithMany("OffersRequests")
                         .HasForeignKey("SpecialistId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -707,18 +976,18 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                     b.Navigation("Specialist");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Payment", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.Orders.Payment", b =>
                 {
                     b.HasOne("Order", "Order")
                         .WithMany("Payments")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Review", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.Orders.Review", b =>
                 {
                     b.HasOne("Order", "Order")
                         .WithMany("Reviews")
@@ -726,95 +995,198 @@ namespace App.Infrastructure.Db.SqlServer.Ef.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Achare.src.Domain.Core.Entities.Specialist", null)
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.Specialist", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("SpecialistId");
+                        .HasForeignKey("SpecialistUserId");
 
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Service", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Admin", b =>
                 {
-                    b.HasOne("Achare.src.Domain.Core.Entities.ServiceCategory", "ServiceCategory")
-                        .WithMany("Services")
-                        .HasForeignKey("ServiceCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", "User")
+                        .WithOne("Admin")
+                        .HasForeignKey("App.src.Domain.Core.Entities.UserEntities.Admin", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ServiceCategory");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.User", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Customer", b =>
                 {
-                    b.HasOne("Achare.src.Domain.Core.Entities.City", "City")
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", "User")
+                        .WithOne("Customer")
+                        .HasForeignKey("App.src.Domain.Core.Entities.UserEntities.Customer", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Specialist", b =>
+                {
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", "User")
+                        .WithOne("Specialist")
+                        .HasForeignKey("App.src.Domain.Core.Entities.UserEntities.Specialist", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.User", b =>
+                {
+                    b.HasOne("App.src.Domain.Core.Entities.BaseEntities.City", "City")
                         .WithMany("Users")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Order", b =>
                 {
-                    b.HasOne("Achare.src.Domain.Core.Entities.Customer", "Customer")
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Achare.src.Domain.Core.Entities.Service", "Service")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Achare.src.Domain.Core.Entities.Specialist", null)
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.Specialist", null)
                         .WithMany("Orders")
-                        .HasForeignKey("SpecialistId");
+                        .HasForeignKey("SpecialistUserId");
 
                     b.Navigation("Customer");
 
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.City", b =>
+            modelBuilder.Entity("ServiceSpecialist", b =>
                 {
-                    b.Navigation("Users");
+                    b.HasOne("Achare.src.Domain.Core.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.src.Domain.Core.Entities.UserEntities.Specialist", null)
+                        .WithMany()
+                        .HasForeignKey("SpecialistsUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.ServiceCategory", b =>
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Category", b =>
+                {
+                    b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Service", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Achare.src.Domain.Core.Entities.SubCategory", b =>
                 {
                     b.Navigation("Services");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.User", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.BaseEntities.City", b =>
                 {
-                    b.Navigation("ReceivedMessages");
-
-                    b.Navigation("SentMessages");
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Order", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Customer", b =>
                 {
-                    b.Navigation("ChatMessages");
+                    b.Navigation("Comments");
 
-                    b.Navigation("OrderRequests");
+                    b.Navigation("Orders");
+                });
 
-                    b.Navigation("Payments");
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.Specialist", b =>
+                {
+                    b.Navigation("OffersRequests");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Customer", b =>
+            modelBuilder.Entity("App.src.Domain.Core.Entities.UserEntities.User", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Admin");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Specialist");
                 });
 
-            modelBuilder.Entity("Achare.src.Domain.Core.Entities.Specialist", b =>
+            modelBuilder.Entity("Order", b =>
                 {
-                    b.Navigation("OrderRequests");
+                    b.Navigation("Comments");
 
-                    b.Navigation("Orders");
+                    b.Navigation("OrderOffers");
+
+                    b.Navigation("Payments");
 
                     b.Navigation("Reviews");
                 });

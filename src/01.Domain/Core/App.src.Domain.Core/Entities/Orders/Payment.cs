@@ -17,10 +17,10 @@ namespace App.src.Domain.Core.Entities.Orders
         public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public PaymentMethod Method { get; set; }
+        public PaymentMethodEnum Method { get; set; }
 
         [Required]
-        public PaymentStatus Status { get; set; }
+        public PaymentStatusEnum Status { get; set; }
     }
 }
 

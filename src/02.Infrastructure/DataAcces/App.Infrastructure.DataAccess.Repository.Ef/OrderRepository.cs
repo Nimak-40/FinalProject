@@ -10,7 +10,7 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
 
         public OrderRepository(AppDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         public async Task<List<Order>> GetAllAsync()
@@ -21,8 +21,8 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                                    .Include(o => o.Service)
                                    .Include(o => o.Payments)
                                    .Include(o => o.Reviews)
-                                   .Include(o => o.ChatMessages)
-                                   .Include(o => o.OrderRequests)
+                                   .Include(o => o.Comments)
+                                   .Include(o => o.OrderOffers)  // اصلاح شد
                                    .ToListAsync();
         }
 
@@ -34,8 +34,8 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                                    .Include(o => o.Service)
                                    .Include(o => o.Payments)
                                    .Include(o => o.Reviews)
-                                   .Include(o => o.ChatMessages)
-                                   .Include(o => o.OrderRequests)
+                                   .Include(o => o.Comments)    // اصلاح شد
+                                   .Include(o => o.OrderOffers) // اصلاح شد
                                    .FirstOrDefaultAsync(o => o.Id == id);
         }
 
@@ -73,7 +73,6 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
                 existingOrder.Status = order.Status;
                 existingOrder.TotalAmount = order.TotalAmount;
                 existingOrder.ScheduledDate = order.ScheduledDate;
-                existingOrder.OrderDate = order.OrderDate;
 
                 await _dbContext.SaveChangesAsync();
             }
