@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -14,7 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+	<ProjectReference Include="..\..\00.Frameworks\Framework\Framework.csproj" />
     <ProjectReference Include="..\..\01.Domain\Core\App.src.Domain.Core\App.src.Domain.Core.csproj" />
+    <ProjectReference Include="..\..\01.Domain\Services\HomeService.Domain.Services.AppServices\App.Domain.Services.AppServices.csproj" />
+    <ProjectReference Include="..\..\01.Domain\Services\HomeService.Domain.Services.Services\App.Domain.Services.Services.csproj" />
     <ProjectReference Include="..\..\02.Infrastructure\DataAcces\App.Infrastructure.DataAccess.Repository.Ef\App.Infrastructure.DataAccess.Repository.Ef.csproj" />
     <ProjectReference Include="..\..\02.Infrastructure\DbContext\App.Infrastructure.Db.SqlServer.Ef\App.Infrastructure.Db.SqlServer.Ef.csproj" />
   </ItemGroup>

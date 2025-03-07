@@ -1,4 +1,6 @@
-﻿namespace App.src.Domain.Core.Contracts.Repositories
+﻿using App.src.Domain.Core.Entities.Orders;
+
+namespace App.src.Domain.Core.Contracts.Repositories
 {
     public interface IOrderRepository
     {

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace App.src.Domain.Core.Entities.UserEntities
 {
-   
+
     public class User : IdentityUser<int>
     {
 
@@ -19,7 +19,7 @@ namespace App.src.Domain.Core.Entities.UserEntities
         [MaxLength(500)]
         public string? ImagePath { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
         public UserStatusEnum Status { get; set; } = UserStatusEnum.Pending;
         [MaxLength(255)]
         //navigation

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Achare.src.Domain.Core.Entities
+namespace App.src.Domain.Core.Entities
 {
     public class SubCategory
     {
@@ -18,7 +18,7 @@ namespace Achare.src.Domain.Core.Entities
         #region NavigationProperties
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-        public List<Service> Services { get; set; } = new List<Service>();
+        public List<CategoryService> Services { get; set; } = new List<CategoryService>();
         #endregion
     }
 

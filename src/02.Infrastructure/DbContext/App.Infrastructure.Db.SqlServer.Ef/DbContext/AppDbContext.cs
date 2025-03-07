@@ -1,14 +1,14 @@
-﻿using Achare.src.Domain.Core.Entities;
+﻿using App.src.Domain.Core.Entities;
 using App.src.Domain.Core.Entities.BaseEntities;
 using App.src.Domain.Core.Entities.Orders;
 using App.src.Domain.Core.Entities.UserEntities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using App.src.Infrastructure.Persistence.Configurations;
-using Achare.src.Infrastructure.Persistence.Configurations;
+using App.src.Infrastructure.Configurations;
 
-namespace Achare.Infrastructure
+
+namespace App.src.Infrastructure.DbContext
 {
     public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
@@ -28,7 +28,7 @@ namespace Achare.Infrastructure
         public DbSet<Specialist> Specialists { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
-        public DbSet<Service> Services { get; set; }
+        public DbSet<CategoryService> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

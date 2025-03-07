@@ -1,6 +1,8 @@
-﻿using Achare.Infrastructure;
+﻿
 using App.src.Domain.Core.Contracts.Repositories;
 using App.src.Domain.Core.Entities.BaseEntities;
+using App.src.Domain.Core.Enums;
+using App.src.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,55 +19,37 @@ namespace App.Infrastructure.DataAccess.Repository.Ef
             _dbContext = dbContext;
         }
 
-        public async Task<List<Comment>> GetAllAsync()
+        public async Task<List<Comment>> GetAllComments(int pageNumber, CancellationToken cancellationToken)
         {
-            return await _dbContext.Comments
-                                   .AsNoTracking()
-                                   .Include(c => c.Order)
-                                   .ToListAsync();
+            return await Task.FromResult(_dbContext.Comments
+                .Skip((pageNumber - 1) * 10)
+                .Take(10)
+                .ToList());
         }
 
-        public async Task<Comment?> GetByIdAsync(int id)
+        public async Task<int> GetTotalCount(CancellationToken cancellationToken)
         {
-            return await _dbContext.Comments
-                                   .AsNoTracking()
-                                   .Include(c => c.Order)
-                                   .FirstOrDefaultAsync(c => c.Id == id);
+            return await _dbContext.Comments.CountAsync(cancellationToken);
         }
 
-        public async Task<List<Comment>> GetByOrderIdAsync(int orderId)
+        public async Task AcceptComment(int commentId, CancellationToken cancellationToken)
         {
-            return await _dbContext.Comments
-                                   .AsNoTracking()
-                                   .Where(c => c.OrderId == orderId)
-                                   .ToListAsync();
-        }
-
-        public async Task AddAsync(Comment comment)
-        {
-            await _dbContext.Comments.AddAsync(comment);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(Comment comment)
-        {
-            var existingComment = await _dbContext.Comments.FindAsync(comment.Id);
-
-            if (existingComment != null)
-            {
-                _dbContext.Entry(existingComment).CurrentValues.SetValues(comment);
-                await _dbContext.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var comment = await _dbContext.Comments.FindAsync(id);
+            var comment = _dbContext.Comments.FirstOrDefault(c => c.Id == commentId);
             if (comment != null)
             {
-                _dbContext.Comments.Remove(comment);
-                await _dbContext.SaveChangesAsync();
+                comment.Status = CommentStatusEnum.Accepted;
             }
+            await Task.CompletedTask;
+        }
+
+        public async Task RejectComment(int commentId, CancellationToken cancellationToken)
+        {
+            var comment = _dbContext.Comments.FirstOrDefault(c => c.Id == commentId);
+            if (comment != null)
+            {
+                comment.Status = CommentStatusEnum.Rejected;
+            }
+            await Task.CompletedTask;
         }
     }
 }

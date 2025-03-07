@@ -1,11 +1,12 @@
-﻿using Achare.src.Domain.Core.Entities;
+﻿using App.src.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
-    public class ServiceConfiguration : IEntityTypeConfiguration<Service>
+namespace App.src.Infrastructure.Configurations
+{
+    public class ServiceConfiguration : IEntityTypeConfiguration<CategoryService>
     {
-        public void Configure(EntityTypeBuilder<Service> builder)
+        public void Configure(EntityTypeBuilder<CategoryService> builder)
         {
             builder.ToTable("Services");
 
@@ -42,6 +43,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
                 .WithMany(sp => sp.Services);
         }
     }
+}
     
 
 

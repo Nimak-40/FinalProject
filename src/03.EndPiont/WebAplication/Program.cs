@@ -1,9 +1,17 @@
-using Achare.Infrastructure;
+using App.src.Domain.Core.Contracts.Service;
 using App.Infrastructure.DataAccess.Repository.Ef;
+using App.Infrastructure.DataAccess.Repository.Ef.UserEntities;
 using App.src.Domain.Core.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
+using App.Domain.Services.Services;
+using App.src.Infrastructure.DbContext;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
+
+var builder = WebAplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -11,7 +19,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var siteSetting = builder.Configuration.GetSection("AppSettings").Get<AppDbContext>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -20,9 +27,16 @@ builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
-builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<ISubServiceRepository, SubServiceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISpecialistRepository, SpecialistRepository>();
+//builder.Services.AddScoped<IUserAppService, UserAppService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISpecialistRepository, SpecialistRepository>();
+builder.Services.AddScoped<ISpecialistService, SpecialistService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

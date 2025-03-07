@@ -1,4 +1,8 @@
-﻿using App.src.Domain.Core.Entities.UserEntities;
+﻿using App.src.Domain.Core.Dtos.UserEntities;
+using App.src.Domain.Core.Entities.Resualt;
+using App.src.Domain.Core.Entities.UserEntities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +13,7 @@ namespace App.src.Domain.Core.Contracts.Repositories
 {
     public interface ISpecialistRepository
     {
-        Task<List<Specialist>> GetAllAsync();
-        Task<Specialist?> GetByIdAsync(int id);
-        Task<Specialist?> GetByUsernameAsync(string username);
-        Task AddAsync(Specialist specialist);
-        Task UpdateAsync(Specialist specialist);
-        Task DeleteAsync(int id);
+        Task<Result> Create(int userId, string resume, CancellationToken cancellationToken);
+        Task<int> GetTotalCount(CancellationToken cancellationToken);
     }
 }

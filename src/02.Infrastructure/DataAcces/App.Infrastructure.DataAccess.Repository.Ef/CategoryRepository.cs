@@ -1,6 +1,7 @@
-﻿using Achare.Infrastructure;
-using Achare.src.Domain.Core.Entities;
+﻿
 using App.src.Domain.Core.Contracts.Repositories;
+using App.src.Domain.Core.Entities;
+using App.src.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.DataAccess.Repository.Ef

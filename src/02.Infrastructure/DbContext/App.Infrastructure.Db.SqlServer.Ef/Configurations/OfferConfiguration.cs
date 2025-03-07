@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
+namespace App.src.Infrastructure.Configurations
+{
     public class OfferConfiguration : IEntityTypeConfiguration<Offer>
     {
         public void Configure(EntityTypeBuilder<Offer> builder)
@@ -23,5 +24,5 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
                    .HasConversion<string>();
         }
     }
-
+}
 

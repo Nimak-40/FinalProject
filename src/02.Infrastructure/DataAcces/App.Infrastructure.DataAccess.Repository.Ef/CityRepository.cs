@@ -1,70 +1,40 @@
-﻿using Achare.Infrastructure;
+﻿
 using App.src.Domain.Core.Contracts.Repositories;
 using App.src.Domain.Core.Entities.BaseEntities;
+using App.src.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.DataAccess.Repository.Ef
 {
     public class CityRepository : ICityRepository
     {
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<CityRepository> _logger;
 
-        public CityRepository(AppDbContext dbContext)
+
+        public CityRepository(AppDbContext dbContext, ILogger<CityRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
+
         }
-
-        public async Task<List<City>> GetAllAsync()
+        public async Task<List<City>> GetAll(CancellationToken cancellationToken)
         {
-            return await _dbContext.Cities
-                                   .AsNoTracking()
-                                   .Include(c => c.Users)
-                                   .ToListAsync();
-        }
-
-        public async Task<City?> GetByIdAsync(int id)
-        {
-            return await _dbContext.Cities
-                                   .AsNoTracking()
-                                   .Include(c => c.Users)
-                                   .FirstOrDefaultAsync(c => c.Id == id);
-        }
-
-        public async Task<City?> GetByNameAsync(string name)
-        {
-            return await _dbContext.Cities
-                                   .AsNoTracking()
-                                   .FirstOrDefaultAsync(c => c.Name == name);
-        }
-
-        public async Task AddAsync(City city)
-        {
-            await _dbContext.Cities.AddAsync(city);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(City city)
-        {
-            var existingCity = await _dbContext.Cities
-                                                .FirstOrDefaultAsync(c => c.Id == city.Id);
-
-            if (existingCity != null)
+            try
             {
-                existingCity.Name = city.Name;
-                existingCity.State = city.State;
 
-                await _dbContext.SaveChangesAsync();
+
+                var items = await _dbContext.Cities.AsNoTracking()
+                    .ToListAsync(cancellationToken);
+                return items;
             }
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var city = await GetByIdAsync(id);
-            if (city != null)
+            catch (Exception ex)
             {
-                _dbContext.Cities.Remove(city);
-                await _dbContext.SaveChangesAsync();
+                _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CityEfRepository", ex.Message);
+                return [];
             }
+
         }
     }
 }

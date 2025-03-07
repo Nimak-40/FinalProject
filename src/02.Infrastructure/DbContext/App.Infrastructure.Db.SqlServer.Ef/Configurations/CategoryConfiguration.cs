@@ -1,8 +1,8 @@
-﻿using Achare.src.Domain.Core.Entities;
+﻿using App.src.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Achare.src.Infrastructure.Persistence.Configurations
+namespace App.src.Infrastructure.Configurations
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {

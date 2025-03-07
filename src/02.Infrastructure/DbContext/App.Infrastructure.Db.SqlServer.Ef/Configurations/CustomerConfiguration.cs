@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.AspNetCore.Identity;
 
-
-public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+namespace App.src.Infrastructure.Configurations
+{ 
+    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
@@ -18,5 +19,6 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             new Customer { Id = 2, UserId = 4, CityId = 1 }
         );
     }
+}
 }
 

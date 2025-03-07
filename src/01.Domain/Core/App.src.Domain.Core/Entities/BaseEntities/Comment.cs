@@ -1,4 +1,5 @@
-﻿using App.src.Domain.Core.Entities.UserEntities;
+﻿using App.src.Domain.Core.Entities.Orders;
+using App.src.Domain.Core.Entities.UserEntities;
 using App.src.Domain.Core.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;

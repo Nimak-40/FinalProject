@@ -3,17 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Data;
 
-
-public class AdminConfiguration : IEntityTypeConfiguration<Admin>
+namespace App.src.Infrastructure.Configurations
 {
-    public void Configure(EntityTypeBuilder<Admin> builder)
+    public class AdminConfiguration : IEntityTypeConfiguration<Admin>
     {
-        builder.HasKey(a => a.Id);
-        builder.HasOne(a => a.User)
-               .WithOne(u => u.Admin)
-               .HasForeignKey<Admin>(a => a.UserId);
+        public void Configure(EntityTypeBuilder<Admin> builder)
+        {
+            builder.HasKey(a => a.Id);
+            builder.HasOne(a => a.User)
+                   .WithOne(u => u.Admin)
+                   .HasForeignKey<Admin>(a => a.UserId);
 
-        builder.HasData(new Admin { Id = 1, UserId = 1 });
+            builder.HasData(new Admin { Id = 1, UserId = 1 });
+        }
     }
 }
 

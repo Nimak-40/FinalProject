@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
-namespace App.src.Infrastructure.Persistence.Configurations
+namespace App.src.Infrastructure.Configurations
 {
     public class UserConfiguration
     {
